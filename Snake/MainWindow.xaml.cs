@@ -185,8 +185,23 @@ namespace Snake
         {
             await DrawDeadSnake();
             await Task.Delay(1000);
+
+            SaveScoreWindow saveWindow = new SaveScoreWindow(gameState.Score);
+            saveWindow.Owner = this;
+
+            bool? result = saveWindow.ShowDialog();
+
+            if (result == true)
+            {
+                ScoreManager.SaveScore(saveWindow.PlayerName, gameState.Score);
+            }
+
+            ScoreWindow scoreWindow = new ScoreWindow();
+            scoreWindow.Owner = this;
+            scoreWindow.ShowDialog();
+
             Overlay.Visibility = Visibility.Visible;
-            OverlayText.Text="Press any key to start";
+            OverlayText.Text = "Press any key to start";
         }
 
     }
